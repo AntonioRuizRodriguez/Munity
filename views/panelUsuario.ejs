@@ -1,76 +1,94 @@
 <main class="contenedor panel-administracion">
-    <h1>
-        <%= nombrePagina %>
-    </h1>
-    <div class="contenedor-botones">
-        <a href="/nuevo-grupo" class="btn btn-amarillo">Nuevo Grupo</a>
-        <a href="/nuevo-evento" class="btn btn-azul">Nuevo Evento</a>
-        <a href="/nuevo-perfil" class="btn btn-rosa">Nuevo Perfil</a>
-        <a href="/imagen-perfil" class="btn btn-amarillo">Imagen Perfil</a>
-    </div>
-    <div class="seccion-admin">
-        <h2>Tus Eventos</h2>
-        <ul>
-            <li>
-                <div class="informacion-admin">
-                    <p class="fecha">Lunes, 15 de Noviembre de 2021</p>
-                    <h3>JavaScript en Badajoz</h3>
-                    <small>23 Asistentes</small>
-                </div>
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde">Editar</a>
-                    <a href="#" class="btn btn-azul2">Asistentes</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-            </li>
-            <li>
-                <div class="informacion-admin">
-                    <p class="fecha">Viernes, 26 de Noviembre de 2021</p>
-                    <h3>Digitalizacion de Pymes</h3>
-                    <small>53 Asistentes</small>
-                </div>
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde">Editar</a>
-                    <a href="#" class="btn btn-azul2">Asistentes</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-            </li>
-            <li>
-                <div class="informacion-admin">
-                    <p class="fecha">Sababo, 4 de Diciembre de 2021</p>
-                    <h3>Bailes de Salon</h3>
-                    <small>83 Asistentes</small>
-                </div>
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde">Editar</a>
-                    <a href="#" class="btn btn-azul2">Asistentes</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <div class="seccion-admin">
-        <h2>Tus Grupos</h2>
-        <% if(grupos.length){ %>
-            <ul>
-                <% grupos.forEach(grupo=>{ %>
-                    <li>
-                        <div class="informacion-admin">
-                            <h3>
-                                <%= grupo.nombre %>
-                            </h3>
-                        </div>
-                        <div class="acciones contenedor-botones">
-                            <a href="/editar-grupo/<%= grupo.id %> " class="btn btn-verde">Editar</a>
-                            <a href="/imagen-grupo/<%= grupo.id %>" class="btn btn-azul2">Imagen</a>
-                            <a href="/eliminar-grupo/<%= grupo.id %>" class="btn btn-rojo">Eliminar</a>
-                        </div>
-                    </li>
-                    <%  }) %>
-            </ul>
-            <% } else {%>
-                <p>No tienes ningun grupo activo</p>
-                <% } %>
-    </div>
-
+  <h1>
+    <%= nombrePagina %>
+  </h1>
+  <div class="contenedor-botones">
+    <a href="/nuevo-grupo" class="btn btn-amarillo">Nuevo Grupo</a>
+    <a href="/nuevo-evento" class="btn btn-azul">Nuevo Evento</a>
+    <a href="/nuevo-perfil" class="btn btn-rosa">Nuevo Perfil</a>
+    <a href="/imagen-perfil" class="btn btn-amarillo">Imagen Perfil</a>
+  </div>
+  <div class="seccion-admin">
+    <h2>Eventos que estan por LLegar</h2>
+    <% if(evento.length>0) { %>
+      <ul>
+        <% evento.forEach(e=> { %>
+          <li>
+            <div class="informacion-admin">
+              <% moment.locale('es') %>
+                <% const fecha=e.fecha +' '+e.hora; %>
+                <p class="fecha"><%= moment(fecha).format(' LLLL');%>
+                  </p>
+                  <h3>
+                    <%= e.titulo %>
+                  </h3>
+                  <small>
+                    <%= e.asistentes.length %> Asistentes
+                  </small>
+            </div>
+            <div class="acciones contenedor-botones">
+              <a href="/editar-evento/<%= e.id %>" class="btn btn-verde">Editar</a>
+              <a href="/asistentesEvento/<%= e.id %>" class="btn btn-azul2">Asistentes</a>
+              <a href="/eliminar-evento/<%= e.id %>" class="btn btn-rojo">Eliminar</a>
+            </div>
+          </li>
+          <% }); %>
+      </ul>
+      <% } else { %>
+        <p>No tienes eventos creados en este Grupo</p>
+        <% } %>
+  </div>
+  <div class="seccion-admin">
+    <h2>Tus Grupos</h2>
+    <% if(grupos.length){ %>
+      <ul>
+        <% grupos.forEach(grupo=>{ %>
+          <li>
+            <div class="informacion-admin">
+              <h3>
+                <%= grupo.nombre %>
+              </h3>
+            </div>
+            <div class="acciones contenedor-botones">
+              <a href="/editar-grupo/<%= grupo.id %> " class="btn btn-verde">Editar</a>
+              <a href="/imagen-grupo/<%= grupo.id %>" class="btn btn-azul2">Imagen</a>
+              <a href="/eliminar-grupo/<%= grupo.id %>" class="btn btn-rojo">Eliminar</a>
+            </div>
+          </li>
+          <% }) %>
+      </ul>
+      <% } else {%>
+        <p>No tienes ningun grupo activo</p>
+        <% } %>
+  </div>
+  <div class="seccion-admin">
+    <h2>Eventos Pasados</h2>
+    <% if(pasados.length>0) { %>
+      <ul>
+        <% pasados.forEach(e=> { %>
+          <li>
+            <div class="informacion-admin">
+              <% moment.locale('es') %>
+                <% const fecha=e.fecha +' '+e.hora; %>
+                <p class="fecha"><%= moment(fecha).format(' LLLL');%>
+                  </p>
+                  <h3>
+                    <%= e.titulo %>
+                  </h3>
+                  <small>
+                    <%= e.asistentes.length %> Asistentes
+                  </small>
+            </div>
+            <div class="acciones contenedor-botones">
+              <a href="/editar-evento/<%= e.id %>" class="btn btn-verde">Editar</a>
+              <a href="/asistentesEvento/<%= e.id %>" class="btn btn-azul2">Asistentes</a>
+              <a href="/eliminar-evento/<%= e.id %>" class="btn btn-rojo">Eliminar</a>
+            </div>
+          </li>
+          <% }); %>
+      </ul>
+      <% } else { %>
+        <p>No tienes eventos Pasados</p>
+        <% } %>
+  </div>
 </main>

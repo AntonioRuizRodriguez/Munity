@@ -14,6 +14,7 @@ const db = require("./config/db");
 require("./models/Usuarios");
 require("./models/categorias");
 require("./models/grupos");
+require("./models/Evento");
 db.sync()
     .then(() => console.log("Bd Munity Conectada"))
     .catch((error) => console.log(error));

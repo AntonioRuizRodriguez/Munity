@@ -240,7 +240,7 @@ exports.formEliminarGrupo = async(req, res, next) => {
     });
     if (!grupo) {
         req.flash('error', 'Operacion no valida');
-        res.redirect('/panelUser');
+        res.redirect('/panelUsuario');
         return next();
     }
 
@@ -257,11 +257,7 @@ exports.eliminarGrupo = async(req, res, next) => {
             usuarioId: req.user.id
         }
     });
-    if (!grupo) {
-        req.flash('error', 'Operacion no valida');
-        res.redirect('/panelUser');
-        return next();
-    }
+  
     //Borramos el fichero con la imagen 
     if (grupo.imagen) {
         const imagenAnteriorPath = __dirname + `/../public/uploads/grupos/${grupo.imagen}`;
