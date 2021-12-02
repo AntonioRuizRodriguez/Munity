@@ -16,8 +16,7 @@ exports.formNuevoEvento = async (req, res) => {
   });
 };
 
-//Introducimos los Eventos en la bd
-
+//Introducimos los Eventos en la bd 
 exports.crearEvento = async (req, res) => {
   //traemos los datos del body
   const evento = req.body;
@@ -143,8 +142,7 @@ exports.editarEvento = async (req, res, next) => {
   res.redirect("/panelUsuario");
 };
 
-//Borramos eventos de la bd
-
+//Borramos eventos de la bd 
 exports.formEliminarEvento = async (req, res, next) => {
   const evento = await Evento.findOne({
     where: { id: req.params.id, usuarioId: req.user.id },

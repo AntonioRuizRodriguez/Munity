@@ -7,6 +7,7 @@ const autController = require("../controllers/autController");
 const userPanelController = require("../controllers/userPanelController");
 const gruposController = require("../controllers/gruposController");
 const eventoController = require("../controllers/eventoController");
+const perfilesController = require("../controllers/perfilesController");
 
 module.exports = function () {
   //Crea las cuentas
@@ -18,6 +19,13 @@ module.exports = function () {
   //Iniciar sesion
   router.get("/iniciar-sesion", usuariosController.formIniciarSesion);
   router.post("/iniciar-sesion", autController.autenticarUsuario);
+
+  //Cerrar sesion
+  router.get(
+    "/cerrar-sesion",
+    autController.usuarioAutenticado,
+    autController.cerrarSesion
+  );
 
   //Panel de usuario
   router.get(
@@ -114,6 +122,44 @@ module.exports = function () {
     "/eliminar-evento/:id",
     autController.usuarioAutenticado,
     eventoController.eliminarEvento
+  );
+
+  //Ruta para el perfil del usuario
+  router.get(
+    "/editar-perfil",
+    autController.usuarioAutenticado,
+    perfilesController.formEditarPerfil
+  );
+
+  router.post(
+    "/editar-perfil",
+    autController.usuarioAutenticado,
+    perfilesController.guardarPerfil
+  );
+
+  router.get(
+    "/cambiar-pasword",
+    autController.usuarioAutenticado,
+    perfilesController.formCambiarContr
+  );
+
+  router.post(
+    "/cambiar-pasword",
+    autController.usuarioAutenticado,
+    perfilesController.cambiarContr
+  );
+
+  router.get(
+    "/imagen-perfil",
+    autController.usuarioAutenticado,
+    perfilesController.formImagenPerfil
+  );
+
+  router.post(
+    "/imagen-perfil",
+    autController.usuarioAutenticado,
+    perfilesController.subirImagenPerfil,
+    perfilesController.guardarImagenPerfil
   );
 
   return router;
