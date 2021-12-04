@@ -11,6 +11,7 @@
     "author": "Antonio Ruiz Rodriguez",
     "license": "ISC",
     "dependencies": {
+        "axios": "^0.24.0",
         "bcrypt-nodejs": "^0.0.3",
         "concurrently": "^6.4.0",
         "connect-flash": "^0.1.1",

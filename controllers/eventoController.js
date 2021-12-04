@@ -30,6 +30,8 @@ exports.crearEvento = async (req, res) => {
     coordinates: [parseFloat(req.body.lat), parseFloat(req.body.lng)],
   };
   evento.geoloc = point;
+  
+  evento.id=uuid();
 
   //Aforo
   if (req.body.aforo == "") {
@@ -48,7 +50,7 @@ exports.crearEvento = async (req, res) => {
   }
 };
 
-//Valda los campos del formulario para que los inputs sean del Tipo de la bd
+//Valida los campos del formulario para que los inputs sean del Tipo de la bd
 exports.validaFormularioEvento = (req, res, next) => {
   req.sanitizeBody("titulo");
   req.sanitizeBody("invitado");

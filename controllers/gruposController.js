@@ -4,6 +4,7 @@ const Grupos = require("../models/grupos");
 const multer = require("multer");
 const shortid = require("shortid");
 const fs = require("fs");
+const uuid = require("uuid").v4;
 
 //Utilizamos la dependencia Multer para subir archivos, imagenes...etc
 //Configuramos multer
@@ -90,7 +91,7 @@ exports.crearGrupo = async (req, res) => {
   if (req.file) {
     grupo.imagen = req.file.filename;
   }
-
+  grupo.id=uuid();
   try {
     //Pasamos por parámetro el grupo que hemos traido en el request
     await Grupos.create(grupo);

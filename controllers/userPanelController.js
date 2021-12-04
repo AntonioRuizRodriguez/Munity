@@ -19,6 +19,7 @@ exports.panelUser = async (req, res) => {
         usuarioId: req.user.id,
         fecha: { [Op.gte]: moment(new Date()).format("YYYY-MM-DD") },
       },
+      order:[["fecha", "ASC"]]
     })
   );
   querys.push(
@@ -31,7 +32,7 @@ exports.panelUser = async (req, res) => {
   );
 
   //sacamos el resultado de la consulta de eventos del array
-  const [grupos, evento,pasados] = await Promise.all(querys);
+  const [grupos, evento, pasados] = await Promise.all(querys);
 
   // Anterior
   // const grupos = await Grupos.findAll({ where: { usuarioId: req.user.id } });

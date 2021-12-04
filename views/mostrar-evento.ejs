@@ -1,0 +1,92 @@
+<div class="encabezado-evento">
+    <div class="contenedor">
+        <div class="resumen-evento">
+            <h1><%= evento.titulo %> </h1>
+            <div class="info-autor">
+                <div class="imagen">
+                    <% if(evento.usuario.imagen) { %>
+                       <img src="/uploads/perfiles/<%= evento.usuario.imagen %>" > 
+                    <% } %>  
+                </div>
+                <div class="informacion">
+                    <p>Organizado por:</p>
+                    <p class="autor">
+                        <a href="/perfilesAsistentes/<%= evento.usuario.id %> "><%= evento.usuario.nombre %> </a>
+                    <p>Creador de:</p>
+                    <a href="/grupos/<%= evento.grupo.id %> "><%= evento.grupo.nombre %></a>
+                    </p>
+                </div>
+            </div>
+        </div>  
+        <div class="pregunta-asistencia">
+            <% if(usuario.id) { %> 
+                <% const yaInscrito=evento.asistentes.includes(usuario.id) %> 
+                <form action="/inscribirse-evento/<%= evento.slug %>" id="inscribirse-evento">
+                <p>Inscribete</p>
+                <% if(yaInscrito) { %>
+                    <input type="hidden" id="flag" value="Borrar">
+                    <input type="submit" value="Borrar Inscripcion" class="btn btn-rojo">
+                <% } else { %>
+                    <input type="hidden" id="flag" value="confirmar">
+                    <input type="submit" value="SI" class="btn btn-azul">
+                <% } %> 
+               <div id="mensaje"></div>
+            </form>
+            <% } else { %> 
+                <p>Necesitas Iniciar Sesion para Inscribirte</p>
+            <% } %> 
+        </div> 
+    </div>
+</div>
+<main class="contenido-evento">
+    <div class="contenedor">
+        <div class="informacion-evento">
+            <div class="descripcion">
+                <img src="/uploads/grupos/<%= evento.grupo.imagen %> " alt="">
+                <%- evento.descripcion %> 
+            </div>
+            <div class="asistentes">
+                <div class="titulo">
+                    <h3><%= evento.asistentes.length %> Asistentes</h3>
+                    <a href="/asistentes/<%= evento.slug %>">Ver Todos</a>
+                </div>
+            </div>
+            <div class="comentarios">
+                <h2>Comentarios</h2>
+                <div class="comentario">
+                    <div class="imagen"></div>
+                    <div class="texto">
+                        <p>Hola</p>
+                        <p>Escrito por <span>Autor</span></p>
+                        <input type="button" value="Eliminar" class="btn btn-azul">
+                    </div>
+                </div>
+                <form action="" class="default-form comentarios">
+                    <legend>Deja tu Comentario</legend>
+                    <div class="campo">
+                        <label>Comentarios</label>
+                        <textarea name="comentario"></textarea>
+                    </div>
+                    <div class="campo enviar">
+                        <input type="submit" class="btn btn-rosa">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <aside class="informacion">
+            <div class="fecha">
+                <% moment.locale('es'); %> 
+                <% const fecha=evento.fecha +' '+evento.hora; %> 
+                <p><%=moment(fecha).format('LLLL')%> h </p>
+            </div>
+            <div class="ubicacion">
+                <p><%= evento.direccion %>,<%= evento.ciudad %>,<%= evento.region %>,<%= evento.pais %> </p>
+            </div>
+
+            <input type="hidden" id="lat" value="<%= evento.geoloc.coordinates[0] %>">
+            <input type="hidden" id="lng" value="<%= evento.geoloc.coordinates[1] %>">
+            <input type="hidden" id="direccion" value="<%=  evento.direccion %>">
+            <div id="ubicacion-evento"></div>
+        </aside>
+    </div>
+</main>

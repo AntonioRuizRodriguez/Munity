@@ -1,13 +1,20 @@
-const Sequelize = require('sequelize');
-const db = require('../config/db');
+const Sequelize = require("sequelize");
+const db = require("../config/db");
 
-const Categorias = db.define('categorias', {
+const Categorias = db.define(
+  "categorias",
+  {
     id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+      type: Sequelize.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
     },
-    nombre: Sequelize.TEXT
-});
+    nombre: Sequelize.TEXT,
+    slug: Sequelize.TEXT,
+  },
+  {
+    timestamps: false,
+  }
+);
 
 module.exports = Categorias;

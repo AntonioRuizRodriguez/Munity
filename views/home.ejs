@@ -1,3 +1,92 @@
-<h1>
-    <%- nombrePagina %>
-</h1>
+<div class="hero">
+    <h1>Encuentra o crea un grupo para compartir lo que más te gusta</h1>
+    <a href="/crear-cuenta" class="btn btn-amarillo">Obtener Cuenta</a>
+</div>
+
+<div class="buscador-inicio">
+    <div class="contenedor">
+        <h2>Busca un grupo en tu ciudad</h2>
+        <form action="#">
+            <select name="categoria">
+                <option value="" disabled selected>-- Selecciona Categoría --</option>
+                <% categorias.forEach(c=> { %>
+                    <option value="<%= c.id %> ">
+                        <%= c.nombre %>
+                    </option>
+                    <% }) %>
+            </select>
+            <input type="text" name="nombre" placeholder="Nombre Meeti">
+            <input type="text" name="ciudad" placeholder="Ciudad">
+            <input type="text" name="pais" placeholder="País">
+            <input type="submit" value="Buscar" class="btn btn-rosa">
+        </form>
+    </div>
+</div>
+
+<div class="contenedor">
+    <h2>Próximos Meeti's</h2>
+    <div class="grid columnas-md-3 ">
+        <% if(eventos.length>0) { %>
+            <% eventos.forEach(e=> { %>
+                <div class="card">
+                    <img src="/public/uploads/grupos/<%= e.grupo.imagen %>">
+                    <div class="card-texto">
+                        <% moment.locale('es') %> 
+                        <% const fecha=`${e.fecha} ${e.hora}` %>
+                        <p class="fecha"><%= moment(fecha).format('LLLL') %> h </p>
+                        <a href="/evento/<%=e.slug%>">
+                            <h3><%=e.titulo%></h3>
+                        </a>
+                        <div class="info-autor">
+                            <% if(e.usuario.imagen) { %>
+                                <div class="imagen">
+                                    <img src="/uploads/perfiles/<%= e.usuario.imagen %>">
+                                </div>
+                             <% } else { %>
+                                <div class="imagen"></div>
+                             <% } %>   
+                            <div class="informacion">
+                                <p>Organizado por:</p>
+                                <p class="autor"><%= e.usuario.nombre %></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } %>   
+    </div>
+</div>
+</div>
+
+<main class="bg-gris categorias">
+    <h2>Encuentra Grupos por Categoría</h2>
+
+    <div class="contenedor">
+        <ul class="listado-categorias  grid columnas-2 columnas-md-3">
+            <% categorias.forEach(c=> { %>
+                <li>
+                    <a href="/categoria/<%= c.slug %> ">
+                        <img src="/img/categoria_<%= c.id %>.jpg">
+                        <p>
+                            <%= c.nombre %>
+                        </p>
+                    </a>
+                </li>
+                <% }) %>
+        </ul>
+    </div>
+</main>
+
+<div class="meeti-bg">
+    <div class="contenedor meeti grid columnas-md-2">
+        <section>
+            <h3>Crea un grupo</h3>
+            <p>Comparte lo que te gusta o tu pasión con los demás, crea tu propio grupo hoy mismo sin costos</p>
+        </section>
+        <section>
+            <h3>Únete a un grupo</h3>
+            <p>Conoce personas con tus mismos gustos y pasiones, únete a un grupo ya existente y recibe notificaciones
+                sobre próximos eventos</p>
+        </section>
+    </div>
+</div>

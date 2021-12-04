@@ -1,4 +1,5 @@
 import { OpenStreetMapProvider } from "leaflet-geosearch";
+import inscripciones from './inscripciones'
 const geocodeService = L.esri.Geocoding.geocodeService();
 
 //Capturamos los valores de la bd que hemos mandado al cliente si no hay valores seteamos los de Badajoz

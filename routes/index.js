@@ -9,8 +9,11 @@ const gruposController = require("../controllers/gruposController");
 const eventoController = require("../controllers/eventoController");
 const perfilesController = require("../controllers/perfilesController");
 
+const eventoControllerFront = require("../controllers/frontend/eventoControllerFront");
+const perfilesControllerFront = require('../controllers/frontend/perfilesControllerFront');
+
 module.exports = function () {
-  //Crea las cuentas
+  //Pagina de inicio y registro de cuentas
   router.get("/", homeController.home);
   router.get("/crear-cuenta", usuariosController.formCrearCuenta);
   router.post("/crear-cuenta", usuariosController.crearNuevaCuenta);
@@ -161,6 +164,21 @@ module.exports = function () {
     perfilesController.subirImagenPerfil,
     perfilesController.guardarImagenPerfil
   );
+
+  //FrontEnd -- Muestra un Evento
+  router.get("/evento/:slug", eventoControllerFront.mostrarEvento);
+
+  //Inscribirse en un Evento
+  router.post(
+    "/inscribirse-evento/:slug",
+    eventoControllerFront.inscribirseEvento
+  );
+
+  //Mostramos asistentes al evento
+  router.get("/asistentes/:slug", eventoControllerFront.traerAsistentes);
+
+  //Mostramos los perfiles de los asistentes al evento
+  router.get("/perfilesAsistentes/:id", perfilesControllerFront.mostarPerfil);
 
   return router;
 };
