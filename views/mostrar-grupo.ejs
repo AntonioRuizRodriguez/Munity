@@ -1,0 +1,37 @@
+<div class="contenedor">
+    <h1><%= nombrePagina %> </h1>
+    <div class="informacion-grupo">
+        <div class="imagen">
+            <% if(grupo.imagen) { %> 
+                <img src="/uploads/grupos/<%= grupo.imagen %> ">
+            <% } else { %>
+                <img src="/img/logo.png"> 
+            <% } %>  
+        </div>
+        <div class="texto">
+            <%- grupo.descripcion %> 
+            <% if(grupo.url) { %>
+                <a class="url" target="_blank" href="<%= grupo.url %> ">Sitio Web del Grupo</a>
+            <% } %>
+
+            <% if(evento.length>0) { %>
+                <h2>Los PróXimos Eventos del Grupo</h2>
+                <ul class="lista-meetis">
+                    <% evento.forEach(e => { %>
+                         <li>
+                             <div class="texto">
+                                 <a href="/evento/<%= e.slug %> ">
+                                    <h3><%= e.titulo %> </h3>
+                                    <% moment.locale('es'); %>
+                                    <% const fecha=e.fecha + ' ' + e.hora %>
+                                    <p class="fecha"><%= moment(fecha).format('LLLL') %> h </p>  
+                                </a>
+                             </div>
+                         </li>
+                    <% }) %> 
+                </ul>
+            <% } %> 
+
+        </div>
+    </div>
+</div>

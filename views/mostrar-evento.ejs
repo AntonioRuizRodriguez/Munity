@@ -42,7 +42,9 @@
     <div class="contenedor">
         <div class="informacion-evento">
             <div class="descripcion">
-                <img src="/uploads/grupos/<%= evento.grupo.imagen %> " alt="">
+                <% if (evento.grupo.imagen) { %> 
+                    <img src="/uploads/grupos/<%= evento.grupo.imagen %> " alt="">
+                <% } %> 
                 <%- evento.descripcion %> 
             </div>
             <div class="asistentes">
@@ -53,24 +55,44 @@
             </div>
             <div class="comentarios">
                 <h2>Comentarios</h2>
-                <div class="comentario">
-                    <div class="imagen"></div>
-                    <div class="texto">
-                        <p>Hola</p>
-                        <p>Escrito por <span>Autor</span></p>
-                        <input type="button" value="Eliminar" class="btn btn-azul">
-                    </div>
-                </div>
-                <form action="" class="default-form comentarios">
-                    <legend>Deja tu Comentario</legend>
-                    <div class="campo">
-                        <label>Comentarios</label>
-                        <textarea name="comentario"></textarea>
-                    </div>
-                    <div class="campo enviar">
-                        <input type="submit" class="btn btn-rosa">
-                    </div>
-                </form>
+                <% if(comentarios.length>0) { %> 
+                    <% comentarios.forEach(c => { %>
+                        <div class="comentario">
+                                <div class="imagen">
+                                    <%if(c.usuario.imagen) { %> 
+                                        <img src="/uploads/perfiles/<%= c.usuario.imagen %> " alt="">
+                                    <% } %> 
+                                </div>
+                                <div class="texto">
+                                    <p><%= c.comentario %> </p>
+                                    <p>Escrito por <span><a href="/perfilesAsistentes/<%= c.usuario.id %> "><%= c.usuario.nombre %> </a></span></p>
+                                    <% if(c.usuarioId=== usuario.id) { %> 
+                                        <form class="eliminar-comentario" action="/eliminar-comentario" method="post"> 
+                                            <input type="hidden" name="idComentario" value="<%= c.id %>">
+                                            <input type="submit" value="Eliminar" class="btn btn-azul">
+                                        </form>
+                                        
+                                    <% } %> 
+                                </div>
+                        </div>
+                    <% }); %>  
+                <% } else { %> 
+                    <p>Nadie ha Comentado este Evento Todavía</p>
+                <% } %> 
+                <% if(usuario.id) { %> 
+                    <form method="post" action="/evento/<%= evento.id %> " class="default-form comentarios">
+                        <legend>Deja tu Comentario</legend>
+                        <div class="campo">
+                            <label>Comentarios</label>
+                           <textarea name="coment"></textarea>
+                        </div>
+                        <div class="campo enviar">
+                            <input type="submit" class="btn btn-rosa">
+                        </div>
+                    </form>
+                <% } else { %>
+                    <p>Tienes que Iniciar Sesion para dejar un Comentario</p>
+                <% } %> 
             </div>
         </div>
         <aside class="informacion">

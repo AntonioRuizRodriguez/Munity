@@ -29,7 +29,11 @@
         <% if(eventos.length>0) { %>
             <% eventos.forEach(e=> { %>
                 <div class="card">
-                    <img src="/public/uploads/grupos/<%= e.grupo.imagen %>">
+                    <% if (e.grupo.imagen) { %> 
+                        <img src="/uploads/grupos/<%= e.grupo.imagen %> ">
+                    <% } else { %>
+                        <img src="/img/logo.png">
+                    <% } %> 
                     <div class="card-texto">
                         <% moment.locale('es') %> 
                         <% const fecha=`${e.fecha} ${e.hora}` %>

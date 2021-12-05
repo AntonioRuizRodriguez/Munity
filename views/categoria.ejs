@@ -1,0 +1,38 @@
+<div class="contenedor proximos-eventos">
+    <h1><%= nombrePagina %></h1>
+    <% if(evento.length>0) { %> 
+    <div class="grid columnas-md-3 ">
+        <% evento.forEach(e => { %>  
+            <div class="card">
+                <% if(e.grupo.imagen) { %>
+                    <img src="/uploads/grupos/<%= e.grupo.imagen %> ">
+                <% } else { %>
+                    <img src="/uploads/grupos/logo.png">
+                <% } %>  
+                <div class="card-texto">
+                    <% moment.locale('es') %>
+                    <% const fecha=e.fecha + ' ' + e.hora %>  
+                     <p class="fecha"><%= moment(fecha).format('LLLL') %> h</p>
+                    <a href="#">
+                        <h3><%= e.titulo %> </h3>
+                    </a>
+                    <div class="info-autor">
+                        <div class="imagen">
+                            <% if(e.usuario.imagen) { %>
+                                <img src="/uploads/perfiles/<%= e.usuario.imagen %> " > 
+                            <% } %> 
+                        </div>
+                        <div class="informacion">
+                            <p>Organizado por:</p>
+                            <p class="autor"><%= e.usuario.nombre %> </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div> 
+        <% }); %> 
+    </div>
+    <% } else { %> 
+        <p>Actualmente no hay Eventos en esta Categoria</p>
+    <% } %> 
+</div>

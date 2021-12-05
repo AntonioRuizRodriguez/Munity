@@ -15,6 +15,7 @@ require("./models/Usuarios");
 require("./models/categorias");
 require("./models/grupos");
 require("./models/Evento");
+require("./models/Comentarios");
 db.sync()
     .then(() => console.log("Bd Munity Conectada"))
     .catch((error) => console.log(error));

@@ -3,6 +3,8 @@ const Grupos = require("../../models/grupos");
 const Usuarios = require("../../models/Usuarios");
 const moment = require("moment");
 const Sequelize = require("sequelize");
+const Categorias = require("../../models/categorias");
+const Comentarios = require("../../models/Comentarios");
 
 exports.mostrarEvento = async (req, res) => {
   const evento = await Evento.findOne({
@@ -18,16 +20,23 @@ exports.mostrarEvento = async (req, res) => {
         attributes: ["id", "nombre", "imagen"],
       },
     ],
-  });
+  }); 
+
   if (!evento) {
     res.redirect("/");
   }
+
+   const comentarios = await Comentarios.findAll({
+    where: { eventoId: evento.id },
+    include: [{ model: Usuarios, attributes: ["id", "nombre", "imagen"] }],
+  });
 
   //Mandamos al FrontEnd lo que nos devuelve la consulta
   res.render("mostrar-evento", {
     nombrePagina: evento.titulo,
     evento,
     moment,
+    comentarios
   });
 };
 
@@ -84,5 +93,31 @@ exports.traerAsistentes = async (req, res) => {
   res.render("inscritos-evento", {
     nombrePagina: "Lista de Personas Inscritas en el Evento",
     listado,
+  });
+};
+
+//Agrupamos los eventos por Categorias
+exports.porCategorias = async (req, res, next) => {
+  const categoria = await Categorias.findOne({
+    attributes: ["id", "nombre"],
+    where: { slug: req.params.categoria },
+  });
+
+  const evento = await Evento.findAll({
+    include: [
+      {
+        model: Grupos,
+        where: { categoriaId: categoria.id },
+      },
+      {
+        model: Usuarios,
+      },
+    ],
+    order: [["fecha", "ASC"]],
+  });
+  res.render("categoria", {
+    nombrePagina: `Categoria: ${categoria.nombre}`,
+    evento,
+    moment,
   });
 };

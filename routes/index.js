@@ -10,7 +10,9 @@ const eventoController = require("../controllers/eventoController");
 const perfilesController = require("../controllers/perfilesController");
 
 const eventoControllerFront = require("../controllers/frontend/eventoControllerFront");
-const perfilesControllerFront = require('../controllers/frontend/perfilesControllerFront');
+const perfilesControllerFront = require("../controllers/frontend/perfilesControllerFront");
+const grposControllerFront = require("../controllers/frontend/grposControllerFront");
+const comentariosControllerFront = require("../controllers/frontend/comentariosControllerFront");
 
 module.exports = function () {
   //Pagina de inicio y registro de cuentas
@@ -179,6 +181,21 @@ module.exports = function () {
 
   //Mostramos los perfiles de los asistentes al evento
   router.get("/perfilesAsistentes/:id", perfilesControllerFront.mostarPerfil);
+
+  //Mostramos los grupos en la tarjeta del eveto
+  router.get("/grupos/:id", grposControllerFront.mostrarGrupo);
+
+  //Agrupamos los Eventos por Categorias
+  router.get("/categoria/:categoria", eventoControllerFront.porCategorias);
+
+  //Incluimos los Comentarios
+  router.post("/evento/:id", comentariosControllerFront.guardaComentario);
+
+  //Eliminar Comentarios
+  router.post(
+    "/eliminar-comentario",
+    comentariosControllerFront.eliminarComentario
+  );
 
   return router;
 };
