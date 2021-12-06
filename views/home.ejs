@@ -6,18 +6,26 @@
 <div class="buscador-inicio">
     <div class="contenedor">
         <h2>Busca un grupo en tu ciudad</h2>
-        <form action="#">
+        <form method="get" action="search">
             <select name="categoria">
-                <option value="" disabled selected>-- Selecciona Categoría --</option>
+                <option value="" selected>-- Todas las Categoría --</option>
                 <% categorias.forEach(c=> { %>
                     <option value="<%= c.id %> ">
                         <%= c.nombre %>
                     </option>
                     <% }) %>
             </select>
-            <input type="text" name="nombre" placeholder="Nombre Meeti">
+            <input type="text" name="titulo" placeholder="Nombre Evento">
             <input type="text" name="ciudad" placeholder="Ciudad">
-            <input type="text" name="pais" placeholder="País">
+            <select name="pais">
+                <option value="" selected>-- Todos --</option>
+                <option value="FRA">Francia</option>
+                <option value="PRT">Portugal</option>
+                <option value="DEU">Alemania</option>
+                <option value="ESP">España</option>
+                <option value="ITA">Italia</option>
+                <option value="MAR">Marruecos</option>
+            </select>
             <input type="submit" value="Buscar" class="btn btn-rosa">
         </form>
     </div>
@@ -28,39 +36,11 @@
     <div class="grid columnas-md-3 ">
         <% if(eventos.length>0) { %>
             <% eventos.forEach(e=> { %>
-                <div class="card">
-                    <% if (e.grupo.imagen) { %> 
-                        <img src="/uploads/grupos/<%= e.grupo.imagen %> ">
-                    <% } else { %>
-                        <img src="/img/logo.png">
-                    <% } %> 
-                    <div class="card-texto">
-                        <% moment.locale('es') %> 
-                        <% const fecha=`${e.fecha} ${e.hora}` %>
-                        <p class="fecha"><%= moment(fecha).format('LLLL') %> h </p>
-                        <a href="/evento/<%=e.slug%>">
-                            <h3><%=e.titulo%></h3>
-                        </a>
-                        <div class="info-autor">
-                            <% if(e.usuario.imagen) { %>
-                                <div class="imagen">
-                                    <img src="/uploads/perfiles/<%= e.usuario.imagen %>">
-                                </div>
-                             <% } else { %>
-                                <div class="imagen"></div>
-                             <% } %>   
-                            <div class="informacion">
-                                <p>Organizado por:</p>
-                                <p class="autor"><%= e.usuario.nombre %></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%- include ('partials/card-evento.ejs',{e:e}) %>   
             <% }); %>
         <% } %>   
     </div>
-</div>
-</div>
+</div> 
 
 <main class="bg-gris categorias">
     <h2>Encuentra Grupos por Categoría</h2>

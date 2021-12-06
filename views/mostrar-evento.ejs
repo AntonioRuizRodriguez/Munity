@@ -66,7 +66,7 @@
                                 <div class="texto">
                                     <p><%= c.comentario %> </p>
                                     <p>Escrito por <span><a href="/perfilesAsistentes/<%= c.usuario.id %> "><%= c.usuario.nombre %> </a></span></p>
-                                    <% if(c.usuarioId=== usuario.id) { %> 
+                                    <% if(c.usuarioId=== usuario.id || evento.usuarioId===usuario.id) { %> 
                                         <form class="eliminar-comentario" action="/eliminar-comentario" method="post"> 
                                             <input type="hidden" name="idComentario" value="<%= c.id %>">
                                             <input type="submit" value="Eliminar" class="btn btn-azul">
@@ -112,3 +112,14 @@
         </aside>
     </div>
 </main>
+<h2>Eventos Cercanos</h2>
+<div class="contenedor cercanos"> 
+    <% if(masCercanos.length>0) { %> 
+        <% masCercanos.forEach(e => {  %> 
+            <%- include ('partials/card-evento.ejs',{e:e}) %>
+      <%  }); %>  
+    <% } else { %> 
+        <p>Actualmente no hay eventos cercanos</p>
+    <% } %> 
+</div>
+

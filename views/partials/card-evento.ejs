@@ -1,0 +1,28 @@
+<div class="card">
+    <% if (e.grupo.imagen) { %> 
+        <img src="/uploads/grupos/<%= e.grupo.imagen %> ">
+    <% } else { %>
+        <img src="/img/logo.png">
+    <% } %> 
+    <div class="card-texto">
+        <% moment.locale('es') %> 
+        <% const fecha=`${e.fecha} ${e.hora}` %>
+        <p class="fecha"><%= moment(fecha).format('LLLL') %> h </p>
+        <a href="/evento/<%=e.slug%>">
+            <h3><%=e.titulo%></h3>
+        </a>
+        <div class="info-autor">
+            <% if(e.usuario.imagen) { %>
+                <div class="imagen">
+                    <img src="/uploads/perfiles/<%= e.usuario.imagen %>">
+                </div>
+             <% } else { %>
+                <div class="imagen"></div>
+             <% } %>   
+            <div class="informacion">
+                <p>Organizado por:</p>
+                <p class="autor"><%= e.usuario.nombre %></p>
+            </div>
+        </div>
+    </div>
+</div>

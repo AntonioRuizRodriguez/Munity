@@ -13,8 +13,14 @@ const eventoControllerFront = require("../controllers/frontend/eventoControllerF
 const perfilesControllerFront = require("../controllers/frontend/perfilesControllerFront");
 const grposControllerFront = require("../controllers/frontend/grposControllerFront");
 const comentariosControllerFront = require("../controllers/frontend/comentariosControllerFront");
+const searchControlleFront = require("../controllers/frontend/searchControllerFront");
 
 module.exports = function () {
+
+  //Busquedas
+  router.get('/search',searchControlleFront.searchResult);
+
+
   //Pagina de inicio y registro de cuentas
   router.get("/", homeController.home);
   router.get("/crear-cuenta", usuariosController.formCrearCuenta);

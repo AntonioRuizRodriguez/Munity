@@ -12,9 +12,39 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function borrarComentario(e) {
-    e.preventDefault();
-   
-    axios.post(this.action).then(res=>{
-        console.log(res);
-    })
+  e.preventDefault();
+
+  Swal.fire({
+    title: "El Comentario se Eliminará",
+    text: "El Comentario no se podrá Recuperar",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, Eliminar!",
+    cancelButtonText: "No Eliminar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      //Capturamos el id del comentario que corresponde con el input hidden del html
+      const comentarioId = this.children[0].value;
+
+      //Objeto que pasaremos al post de Axios
+      const obj = {
+        comentarioId,
+      };
+
+      axios
+        .post(this.action, obj)
+        .then((res) => {
+          Swal.fire("Borrado!", res.data, "success");
+
+          //Actualizamos el Formulario para que el comentario desaparezca
+          this.parentElement.parentElement.remove();
+        })
+        .catch((e) => {
+          console.log(e.response);
+          Swal.fire("Error", e.response.data, "error");
+        });
+    }
+  });
 }

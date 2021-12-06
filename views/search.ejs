@@ -1,12 +1,12 @@
 <div class="contenedor">
     <h1><%= nombrePagina %></h1>
-    <% if(evento.length>0) { %> 
+    <% if(eventos.length>0) { %> 
     <div class="grid columnas-md-3 ">
-        <% evento.forEach(e => { %>  
+        <% eventos.forEach(e => { %>  
             <%- include ('partials/card-evento.ejs',{e:e}) %>
         <% }); %> 
     </div>
     <% } else { %> 
-        <p>Actualmente no hay Eventos en esta Categoria</p>
+        <p>Tu busqueda no tiene resultados</p>
     <% } %> 
 </div>

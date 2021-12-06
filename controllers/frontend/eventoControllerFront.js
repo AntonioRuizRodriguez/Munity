@@ -5,6 +5,7 @@ const moment = require("moment");
 const Sequelize = require("sequelize");
 const Categorias = require("../../models/categorias");
 const Comentarios = require("../../models/Comentarios");
+const Op = Sequelize.Op;
 
 exports.mostrarEvento = async (req, res) => {
   const evento = await Evento.findOne({
@@ -20,13 +21,37 @@ exports.mostrarEvento = async (req, res) => {
         attributes: ["id", "nombre", "imagen"],
       },
     ],
-  }); 
+  });
 
   if (!evento) {
     res.redirect("/");
   }
 
-   const comentarios = await Comentarios.findAll({
+  //Usamos las funciones de POSTGIS para comparar distancias y mostrar eventos cercanos
+  const posicion = Sequelize.literal(
+    `ST_GeomFromText('POINT(${evento.geoloc.coordinates[0]} ${evento.geoloc.coordinates[1]})')`
+  );
+  const distancia = Sequelize.fn(
+    "ST_Distance_Sphere",
+    Sequelize.col("geoloc"),
+    posicion
+  );
+  const masCercanos = await Evento.findAll({
+    order: distancia,
+    where: Sequelize.where(distancia, { [Op.lte]: 6000 }),
+    offset:1,
+    include: [
+      {
+        model: Grupos,
+      },
+      {
+        model: Usuarios,
+        attributes: ["id", "nombre", "imagen"],
+      },
+    ],
+  });
+
+  const comentarios = await Comentarios.findAll({
     where: { eventoId: evento.id },
     include: [{ model: Usuarios, attributes: ["id", "nombre", "imagen"] }],
   });
@@ -36,7 +61,8 @@ exports.mostrarEvento = async (req, res) => {
     nombrePagina: evento.titulo,
     evento,
     moment,
-    comentarios
+    comentarios,
+    masCercanos,
   });
 };
 
