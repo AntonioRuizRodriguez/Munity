@@ -37,19 +37,16 @@ app.use(expressValidator());
 app.use(expressLayouts);
 app.set("view engine", "ejs");
 
-//Ubicacion de las vistas
-
+//Ubicacion de las vistas 
 app.set("views", path.join(__dirname, "./views"));
 
-//Materiales estaticos
-
+//Materiales estaticos 
 app.use(express.static("public"));
 
 //Habilitamos Cookie Parser
 app.use(cookieParser());
 
-//Creamos la sesion, claves para firmar la session y validarla
-
+//Creamos la sesion, claves para firmar la session y validarla 
 app.use(
     session({
         secret: process.env.SECRETO,
@@ -66,8 +63,7 @@ app.use(passport.session());
 //Agrega flash messages
 app.use(flash());
 
-// Mi propio Middelware (usuario logueado, flash messages, fecha actual)
-
+// Mi propio Middelware (usuario logueado, flash messages, fecha actual) 
 app.use((req, res, next) => {
     res.locals.usuario={...req.user} || null;
     res.locals.mensajes = req.flash();

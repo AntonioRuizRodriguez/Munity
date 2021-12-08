@@ -12,7 +12,7 @@ const Comentarios = db.define("comentario", {
   comentario: Sequelize.TEXT,
 });
 
-//Cada comentario tiene una relaccion 1 a 1 con Usuario y Evento
+//Cada comentario tiene una relaccion 1 a muchos con Usuario y Evento
 Comentarios.belongsTo(Usuarios);
 Comentarios.belongsTo(Evento);
 
