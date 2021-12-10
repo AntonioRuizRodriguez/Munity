@@ -43,9 +43,9 @@
         <div class="informacion-evento">
             <div class="descripcion">
                 <% if (evento.grupo.imagen) { %> 
-                    <img src="/uploads/grupos/<%= evento.grupo.imagen %> " alt="">
+                    <img  class="imagenInfoAutor" src="/uploads/grupos/<%= evento.grupo.imagen %> " alt="">
                 <% } %> 
-                <%- evento.descripcion %> 
+               <p><h3><%- evento.descripcion %> </h3> </p>
             </div>
             <div class="asistentes">
                 <div class="titulo">

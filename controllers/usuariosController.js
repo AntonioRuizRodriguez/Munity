@@ -7,7 +7,7 @@ exports.formCrearCuenta = (req, res) => {
   });
 };
 
-exports.crearNuevaCuenta = async (req, res) => {
+exports.crearNuevaCuenta = async (req, res,next) => {
   const usuario = req.body;
 
   //Validamos el campo Repetir Password y confirmamos que no venga vacio
@@ -25,11 +25,49 @@ exports.crearNuevaCuenta = async (req, res) => {
 
   //Puede que se cree correctamente o no
   //Administramos el error
+  let errorMail=false;
+  
+    await Usuarios.create(usuario)
+      .then(function (user) {
+        // you can now access the newly created user
+        console.log("success", user.toJSON());
+       
+      })
+      .catch(function (err) {
+        // print the error details
+        errorMail=true;
+        console.log('los putos errores sonasdfasdfas '+Object.keys(err.errors).length);
+        if(Object.keys(err.errors).length<1){
+          req.flash("error", "Ese correo no");
+          res.redirect("/iniciar-sesion");
+          return next();
+        }else{
+          const erroresSequelize = err.errors.map((err) => err.message);
+          console.log("Los errores de Sequelize son: " + erroresSequelize);
+      
+          //Los errores de Express vienen en el campo msg
+          //Extraemos msg
+          const errExp = erroresExpress.map((err) => err.msg);
+      
+          console.log("Los errores de Express son: " + errExp);
+      
+          //Unimos todos lo errores en una sola lista de Errores
+      
+          const listaErrores = [...erroresSequelize, ...errExp];
+      
+  
+          //Pasamos los errores a flahs
+          //Redireccionamos a la ruta donde queremos mostrar los errores
+      
+          req.flash("error", listaErrores);
+          res.redirect("/iniciar-sesion");
+        }
+       
+         return next(); 
+      });
 
-  try {
-    await Usuarios.create(usuario);
-
-    //Url de confirmación
+      if(!errorMail){
+        //Url de confirmación
 
     const url = `http://${req.headers.host}/confirmar-cuenta/${usuario.email}`;
 
@@ -44,29 +82,9 @@ exports.crearNuevaCuenta = async (req, res) => {
 
     req.flash("exito", "Se ha enviado un e-mail para que confirmes tu cuenta");
     res.redirect("/iniciar-sesion");
-  } catch (error) {
-    //Errores de Sequelize
-    //Los errores de la Base de Datos vienen en el campo message
-    //Extraemos message
-    const erroresSequelize = error.errors.map((err) => err.message);
-    console.log("Los errores de Sequelize son: " + erroresSequelize);
-
-    //Los errores de Express vienen en el campo msg
-    //Extraemos msg
-    const errExp = erroresExpress.map((err) => err.msg);
-
-    console.log("Los errores de Express son: " + errExp);
-
-    //Unimos todos lo errores en una sola lista de Errores
-
-    const listaErrores = [...erroresSequelize, ...errExp];
-
-    //Pasamos los errores a flahs
-    //Redireccionamos a la ruta donde queremos mostrar los errores
-
-    req.flash("error", listaErrores);
-    res.redirect("crear-cuenta"); //Se imprimen los mensajes en los Locals
-  }
+      }
+    
+  
 };
 
 //Confirma la cuenta del Usuario
@@ -98,6 +116,3 @@ exports.formIniciarSesion = (req, res) => {
     nombrePagina: "Iniciar Sesion",
   });
 };
-
-
-

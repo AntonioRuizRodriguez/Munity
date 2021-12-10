@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const expressValidator = require("express-validator");
 const passport = require("./config/passport");
 const router = require("./routes");
+var favicon = require('serve-favicon')
 
 //Configuración y Modelos de Base de Datos
 const db = require("./config/db");
@@ -25,6 +26,8 @@ require("dotenv").config({ path: "variables.env" });
 
 //App
 const app = express();
+
+app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 
 //Body parser, leer formularios
 app.use(bodyParser.json());

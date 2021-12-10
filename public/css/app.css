@@ -220,6 +220,17 @@ p {
     margin-left: 2rem;
 }
 
+.imagenInfoAutor{
+
+    border-top-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
+    border-bottom-right-radius: 1rem; 
+    box-shadow: 5px 5px 25px #222 inset;
+
+}
+
+
 .info-autor .imagen,
 .listado-asistentes .imagen {
     border-radius: 50%;
@@ -227,6 +238,7 @@ p {
     height: 70px;
     width: 70px;
     overflow: hidden;
+    
 }
 .info-autor .imagen img,
 .listado-asistentes .imagen img {
@@ -246,7 +258,6 @@ p {
 .info-autor p {
     margin: 0;
 }
-
 
 /** layout**/
 
@@ -399,27 +410,27 @@ main.categorias {
 
 /** Caracteristicas **/
 
-.meeti-bg {
-    background: linear-gradient( to bottom, #B8336A 0%, #B8336A 50%, #068D9D 50%, #068D9D 100%);
+.evento-bg {
+    background: linear-gradient( to bottom, #B8336A 0%, #c24d09 50%, #a00707 50%, #9d0670 100%);
     padding: 5rem 0;
 }
 
 @media (min-width:768px) {
-    .meeti-bg {
-        background: linear-gradient( to right, #B8336A 0%, #B8336A 50%, #068D9D 50%, #068D9D 100%);
+    .evento-bg {
+        background: linear-gradient( to right, #B8336A 0%, #c24d09 50%, #a00707 50%, #9d0670 100%);
     }
 }
 
-.meeti {
+.evento {
     color: white;
     width: 90%;
 }
 
-.meeti h3 {
+.evento h3 {
     font-size: 2.4rem;
 }
 
-.meeti p {
+.evento p {
     font-size: 1.4rem;
 }
 
@@ -524,7 +535,7 @@ trix-editor h1 {
     align-self: flex-start;
     padding-top: 4rem;
 }
-
+ 
 trix-toolbar,
 trix-editor {
     background-color: white!important;
@@ -784,6 +795,99 @@ aside img {
     display: block;
 }
 
+
+div.asistentes h1,
+.asistentes .no-asistentes {
+    text-align: center;
+}
+.listado-asistentes {
+    padding-bottom: 4rem;
+}
+.listado-asistentes li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding : 2rem;
+    border: 3px solid #EAEAEA;
+    border-bottom: none;
+}
+.listado-asistentes li:last-of-type {
+    border-bottom: 3px solid #EAEAEA;
+}
+@media (min-width: 768px) {
+    .listado-asistentes {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+.listado-asistentes .imagen {
+    margin-right: 3rem;
+}
+.listado-asistentes .texto {
+    flex: 1;
+    font-size: 2rem;
+}
+.informacion-usuario,
+.informacion-grupo {
+        margin-top:2rem;
+}
+.informacion-grupo a.url {
+    margin-top: 1rem;
+    display: block;
+}
+@media (min-width: 660px) {
+    .informacion-usuario,
+    .informacion-grupo {
+        display: flex;
+        justify-content: space-between;
+    }
+    .informacion-usuario .imagen,
+    .informacion-grupo .imagen {
+        flex: 0 0 40%;
+    }
+    .informacion-usuario .texto,
+    .informacion-grupo .texto{
+        flex: 0 0 calc(60% - 3rem)
+    }
+}
+.informacion-usuario div,
+.informacion-grupo div  {
+    font-size: 1.2rem;
+    text-align: left;
+    line-height: 2;
+    font-weight: 400;
+    font-family:  'Raleway', sans-serif;
+}
+
+.lista-grupos  {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.lista-grupos li{
+    flex: 0 0 calc(50% - 1rem);
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    .lista-grupos li{
+        flex: 0 0 calc(33.3% - 2rem);
+        
+    }
+}
+
+@media (min-width: 768px) {
+    .cercanos {
+        display: flex;
+        justify-content: space-between;
+    }
+    .cercanos .card {
+        flex: 0 0 calc(33.3% - 2rem);
+    }
+    .cercanos .informacion {
+        flex: 1;
+    }
+}
 
 /** Mapa **/
 
